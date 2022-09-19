@@ -1,7 +1,9 @@
-FROM golang:1.12.0-alpine3.9
+FROM golang:latest
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
-RUN apk add git
-RUN go run main.go
+COPY go.mod .
+COPY go.sum .
+RUN go mod tidy
+RUN go build -o main .
 CMD ["/app/main"]
