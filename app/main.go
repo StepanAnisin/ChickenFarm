@@ -36,6 +36,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		mutex.Lock()
 		fmt.Print(eggsInFridge)
+		fmt.Fprintf(w, "Количество яиц в холодильнике: ", eggsInFridge)
 		mutex.Unlock()
 	})
 	log.Fatal(http.ListenAndServe(":8081", nil))
@@ -66,7 +67,7 @@ func carryEggs(number int, ch chan bool, mutex *sync.Mutex, eggsMinSpawnCount in
 		mutex.Lock()
 		eggsInFridge += eggsSpawnCount
 		mutex.Unlock()
-		log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц")
+		log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц с задержкой ", eggsSpawnDelay)
 	}
 }
 
