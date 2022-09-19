@@ -1,8 +1,7 @@
 FROM golang:1.12.0-alpine3.9
 RUN mkdir /app
-ADD . /app
+COPY . /app
 WORKDIR /app
 RUN apk add git
-COPY ./config .
-RUN go build -o main .
+RUN go run main.go
 CMD ["/app/main"]

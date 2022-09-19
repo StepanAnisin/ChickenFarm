@@ -1,20 +1,21 @@
 package main
 
 import (
-	"config"
 	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
 	"sync"
 	"time"
+
+	Config "github.com/StepanAnisin/Config"
 )
 
 var eggsInFridge int = 0 //  общий ресурс
 
 func main() {
 
-	config, err := config.LoadConfig()
+	config, err := Config.LoadConfig()
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
