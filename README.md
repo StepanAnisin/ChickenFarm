@@ -8,3 +8,15 @@
 ` docker-compose build `
 
 ` docker-compose up -d `
+
+Конфигурационный файл /app/config/app.env:
+
++ CHICKS_COUNT - количество куриц
++ EGGS_MIN_SPAWN_COUNT - минимальное количество снесенных яиц за раз
++ EGGS_MAX_SPAWN_COUNT - максимальное количество снесенных яиц за раз
++ EGGS_SPAWN_MIN_DELAY - минимальная задержка перед снесением яйца
++ EGGS_SPAWN_MAX_DELAY - максимальная задержка перед снесением яйца
++ MIN_CHECK_DELAY - минимальное время интервала в которое приходит фермер
++ MAX_CHECK_DELAY - максимальное время интервала через которое приходит фермер
++ MIN_NEEDED_QUANTITY - мин количество яиц, которые нужны фермеру
++ MAX_NEEDED_QUANTITY - макс количество яиц, которые нужны фермеру
