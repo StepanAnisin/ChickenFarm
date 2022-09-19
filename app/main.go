@@ -86,13 +86,15 @@ func farmerComes(ch chan bool, FarmerCheckMinDelay int, FarmerCheckMaxDelay int,
 		eggsQuantityNeeded := random(FarmerMinNeededQuantity, FarmerMaxNeededQuantity)
 		mutex.Lock()
 		if eggsInFridge <= eggsQuantityNeeded {
+			log.Print("Фермер взял ", eggsInFridge, " яиц ")
 			eggsInFridge = 0
+			log.Print("Количество яиц в холодильнике: ", eggsInFridge)
 		}
 		if eggsInFridge > eggsQuantityNeeded {
 			eggsInFridge -= eggsQuantityNeeded
+			log.Print("Фермер взял ", eggsQuantityNeeded, " яиц ")
+			log.Print("Количество яиц в холодильнике: ", eggsInFridge)
 		}
 		mutex.Unlock()
-		log.Print("Фермер взял ", eggsQuantityNeeded, " яиц ")
-		log.Print("Количество яиц в холодильнике: ", eggsInFridge)
 	}
 }
