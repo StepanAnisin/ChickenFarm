@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-var eggsInFridge, eggsNeededForFarmer int = 0, 0 //  общий ресурс
+var eggsInFridge int = 0 //  общий ресурс
 
 func main() {
 
@@ -21,16 +21,16 @@ func main() {
 	//Запуск процесса спауна яиц
 	ch := make(chan bool) // канал
     var mutex sync.Mutex // определяем мьютекс
-    for i := 1; i < config.ChikensCount; i++{
+    for i := 0; i < config.ChikensCount; i++{
         go carryEggs(i, ch, &mutex, config.EggsMinSpawnCount, config.EggsMaxSpawnCount,
 			 config.EggsSpawnMinDelay, config.EggsSpawnMaxDelay)		
     }
-	go farmerComes(config.FarmerCheckMinDelay, config.FarmerCheckMaxDelay, config.FarmerMaxNeededQuantity,
+	go farmerComes(config.FarmerCheckMinDelay, config.FarmerCheckMaxDelay, config.FarmerMaxNeededQuantity, 
 		config.FarmerMinNeededQuantity, &mutex)
 	//Запуск Хэндлера
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
-		mutex.Lock()		
-		fmt.Print("Hello world")
+		mutex.Lock()	
+		fmt.Print(eggsInFridge)
 		mutex.Unlock()
 	})
 	log.Fatal(http.ListenAndServe(":8081", nil))
@@ -40,7 +40,7 @@ func main() {
 // Генерация рандомного числа в диапазоне
 func random(min, max int) int {
 	rand.Seed(time.Now().Unix())
-	return rand.Intn(max-min) + min
+	return rand.Intn(min-max) + min
 }
 //TODO 
 // Функция спауна яиц курицей
@@ -66,13 +66,13 @@ func carryEggs (number int, ch chan bool, mutex *sync.Mutex, eggsMinSpawnCount i
 }
 
 //Фермер приходит и забирает яйца
-func farmerComes(farmerCheckMinDelay int, farmerCheckMaxDelay int, farmerMaxNeededQuantity int,
-	 farmerMinNeededQuantity int,  mutex *sync.Mutex){
+func farmerComes(FarmerCheckMinDelay int, FarmerCheckMaxDelay int, FarmerMaxNeededQuantity int, 
+	FarmerMinNeededQuantity int,  mutex *sync.Mutex){
 	for {
-		farmerCheckDelay := random(farmerCheckMinDelay, farmerCheckMaxDelay)
+		farmerCheckDelay := random(FarmerCheckMinDelay, FarmerCheckMaxDelay)
 		// Calling Sleep method
 		time.Sleep(time.Duration(farmerCheckDelay)*time.Second)
-		eggsQuantityNeeded := random(farmerMinNeededQuantity, farmerMaxNeededQuantity)
+		eggsQuantityNeeded := random(FarmerMinNeededQuantity, FarmerMaxNeededQuantity)
 		mutex.Lock()
 		if eggsInFridge <= eggsQuantityNeeded {
 			eggsInFridge = 0
