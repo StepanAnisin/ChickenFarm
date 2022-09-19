@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"net/http"
 	"sync"
@@ -24,8 +25,10 @@ func main() {
 	wg.Add(6)
 
 	//Запуск процесса спауна яиц
-	ch := make(chan bool) // канал
-	var mutex sync.Mutex  // определяем мьютекс
+	// канал
+	ch := make(chan bool)
+	// определяем мьютекс
+	var mutex sync.Mutex
 	for i := 0; i < config.ChikensCount; i++ {
 		go carryEggs(i, ch, &mutex, config.EggsMinSpawnCount, config.EggsMaxSpawnCount,
 			config.EggsSpawnMinDelay, config.EggsSpawnMaxDelay)
@@ -49,14 +52,11 @@ func random(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
-// TODO
 // Функция спауна яиц курицей
-// func carryEggs(){
 // 1. Генерируем время через сколько заспаунилось яйцо (eggSpawnDelay)
 // 2. Генерируем сколько яиц заспаунилось (eggsMin, eggsMax)
 // 3. Складываем в любой свободный ресурс
 // 4. Приходит фермер, всё забирает. Видимо, обнуляем этот некторый счетчик
-// }
 func carryEggs(number int, ch chan bool, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpawnCount int,
 	eggsSpawnMinDelay int, eggsSpawnMaxDelay int) {
 	for {
@@ -65,9 +65,14 @@ func carryEggs(number int, ch chan bool, mutex *sync.Mutex, eggsMinSpawnCount in
 		time.Sleep(time.Duration(eggsSpawnDelay) * time.Second)
 		eggsSpawnCount := random(eggsMinSpawnCount, eggsMaxSpawnCount)
 		mutex.Lock()
-		eggsInFridge += eggsSpawnCount
-		mutex.Unlock()
+		if math.MaxInt64-eggsInFridge > eggsSpawnCount {
+			eggsInFridge += eggsSpawnCount
+		} else {
+			eggsInFridge = 0
+		}
 		log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц с задержкой ", eggsSpawnDelay)
+		log.Print("Количество яиц в холодильнике: ", eggsInFridge)
+		mutex.Unlock()
 	}
 }
 
@@ -88,6 +93,6 @@ func farmerComes(ch chan bool, FarmerCheckMinDelay int, FarmerCheckMaxDelay int,
 		}
 		mutex.Unlock()
 		log.Print("Фермер взял ", eggsQuantityNeeded, " яиц ")
+		log.Print("Количество яиц в холодильнике: ", eggsInFridge)
 	}
-	ch <- true
 }
