@@ -9,7 +9,7 @@
 
 ` docker-compose up -d `
 
-Конфигурационный файл:
+Конфигурационный файл /app/config/app.env:
 
 + CHICKS_COUNT - количество куриц
 + EGGS_MIN_SPAWN_COUNT - минимальное количество снесенных яиц за раз
