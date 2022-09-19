@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
-
+	rand.Seed(time.Now().Unix())
 	var wg sync.WaitGroup
 	wg.Add(6)
 
@@ -45,7 +45,6 @@ func main() {
 
 // Генерация рандомного числа в диапазоне
 func random(min, max int) int {
-	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
 }
 
