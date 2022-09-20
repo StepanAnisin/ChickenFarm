@@ -22,7 +22,7 @@ func main() {
 	}
 	rand.Seed(time.Now().Unix())
 	var wg sync.WaitGroup
-	wg.Add(6)
+	wg.Add(config.ChikensCount + 1)
 
 	//Запуск процесса спауна яиц
 	// канал
