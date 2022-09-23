@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"sync"
 	"time"
-
-	Config "github.com/StepanAnisin/Config"
 )
 
 var eggsInFridge int = 0 //  общий ресурс
