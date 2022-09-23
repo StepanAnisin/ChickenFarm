@@ -1,4 +1,4 @@
-module github.com/StepanAnisin/Config
+module github.com/StepanAnisin/config
 
 go 1.19
 

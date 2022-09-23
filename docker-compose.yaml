@@ -2,6 +2,6 @@
  services:
   app:
     restart: always
-    build: ./app
+    build: .
     ports:
       - "8081:8081"

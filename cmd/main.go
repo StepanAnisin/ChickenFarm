@@ -9,14 +9,14 @@ import (
 	"sync"
 	"time"
 
-	Config "github.com/StepanAnisin/Config"
+	Config "github.com/StepanAnisin/chickenfarm/configreader"
 )
 
 var eggsInFridge int = 0 //  общий ресурс
 
 func main() {
 
-	config, err := Config.LoadConfig()
+	config, err := Config.LoadConfig("../config/app.env")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
