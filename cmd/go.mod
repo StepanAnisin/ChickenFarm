@@ -2,9 +2,13 @@ module github.com/StepanAnisin/chickenfarm/handler
 
 go 1.19
 
-replace github.com/StepanAnisin/chickenfarm/configreader => ../pkg/configreader
+replace github.com/StepanAnisin/chickenfarm/pkg/configreader => ../pkg/configreader
 
-require github.com/StepanAnisin/chickenfarm/configreader v0.0.0-00010101000000-000000000000
+require (
+	github.com/StepanAnisin/chickenfarm/pkg/chicken v0.0.0-00010101000000-000000000000
+	github.com/StepanAnisin/chickenfarm/pkg/configreader v0.0.0-00010101000000-000000000000
+	github.com/StepanAnisin/chickenfarm/pkg/farmer v0.0.0-00010101000000-000000000000
+)
 
 require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
@@ -25,3 +29,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/StepanAnisin/chickenfarm/pkg/chicken => ../pkg/chicken
+
+replace github.com/StepanAnisin/chickenfarm/pkg/farmer => ../pkg/farmer

@@ -1,4 +1,4 @@
-module github.com/StepanAnisin/chickenfarm/configreader
+module github.com/StepanAnisin/chickenfarm/pkg/configreader
 
 go 1.19
 
