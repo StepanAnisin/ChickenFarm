@@ -24,6 +24,7 @@ func main() {
 	//Запуск процесса спауна яиц
 	// канал
 	ch := make(chan bool)
+	defer close(ch)
 	// определяем мьютекс
 	var mutex sync.Mutex
 	for i := 0; i < config.ChikensCount; i++ {
