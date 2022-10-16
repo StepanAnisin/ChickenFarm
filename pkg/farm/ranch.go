@@ -21,7 +21,7 @@ func InitRanch(ranch *Ranch) {
 	wg.Add(cfg.ChikensCount)
 	for i := 0; i < cfg.ChikensCount; i++ {
 		go CarryEggs(i, &ranch.mutex, cfg.EggsMinSpawnCount, cfg.EggsMaxSpawnCount,
-			cfg.EggsSpawnMinDelay, cfg.EggsSpawnMaxDelay, &ranch.eggsInFridge, &wg)
+			cfg.EggsSpawnMinDelay, cfg.EggsSpawnMaxDelay, &ranch.eggsInFridge)
 	}
 	go FarmerComes(cfg.FarmerCheckMinDelay, cfg.FarmerCheckMaxDelay, cfg.FarmerMaxNeededQuantity,
 		cfg.FarmerMinNeededQuantity, &ranch.mutex, &ranch.eggsInFridge)

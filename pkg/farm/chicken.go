@@ -19,8 +19,7 @@ func random(min, max int) int64 {
 // 3. Складываем в любой свободный ресурс
 // 4. Приходит фермер, забирает яйца.
 func CarryEggs(number int, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpawnCount int,
-	eggsSpawnMinDelay int, eggsSpawnMaxDelay int, eggsInFridge *int64, wg *sync.WaitGroup) {
-	rand.Seed(time.Now().Unix())
+	eggsSpawnMinDelay int, eggsSpawnMaxDelay int, eggsInFridge *int64) {
 	for {
 		eggsSpawnDelay := random(eggsSpawnMinDelay, eggsSpawnMaxDelay)
 		// Calling Sleep method
@@ -32,7 +31,6 @@ func CarryEggs(number int, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpaw
 			log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц с задержкой ", eggsSpawnDelay)
 			log.Print("Количество яиц в холодильнике: ", *eggsInFridge)
 		} else {
-			wg.Done()
 			mutex.Unlock()
 			break
 		}
