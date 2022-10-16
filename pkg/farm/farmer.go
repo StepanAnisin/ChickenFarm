@@ -1,4 +1,4 @@
-package farmer
+package farm
 
 import (
 	"log"
@@ -7,13 +7,11 @@ import (
 	"time"
 )
 
-// Генерация рандомного числа в диапазоне
-func random(min, max int) int {
-	return rand.Intn(max-min) + min
+type Farmer struct {
 }
 
 // Фермер приходит и забирает яйца
-func FarmerComes(ch chan bool, FarmerCheckMinDelay int, FarmerCheckMaxDelay int, FarmerMaxNeededQuantity int,
+func FarmerComes(FarmerCheckMinDelay int, FarmerCheckMaxDelay int, FarmerMaxNeededQuantity int,
 	FarmerMinNeededQuantity int, mutex *sync.Mutex, eggsInFridge *int) {
 	rand.Seed(time.Now().Unix())
 	for {

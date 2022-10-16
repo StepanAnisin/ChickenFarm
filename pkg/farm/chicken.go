@@ -1,4 +1,4 @@
-package chicken
+package farm
 
 import (
 	"log"
@@ -17,8 +17,8 @@ func random(min, max int) int {
 // 1. Генерируем время через сколько заспаунилось яйцо (eggSpawnDelay)
 // 2. Генерируем сколько яиц заспаунилось (eggsMin, eggsMax)
 // 3. Складываем в любой свободный ресурс
-// 4. Приходит фермер, всё забирает. Видимо, обнуляем этот некторый счетчик
-func CarryEggs(number int, ch chan bool, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpawnCount int,
+// 4. Приходит фермер, забирает яйца.
+func CarryEggs(number int, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpawnCount int,
 	eggsSpawnMinDelay int, eggsSpawnMaxDelay int, eggsInFridge *int) {
 	rand.Seed(time.Now().Unix())
 	for {
