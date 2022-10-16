@@ -29,11 +29,13 @@ func CarryEggs(number int, mutex *sync.Mutex, eggsMinSpawnCount int, eggsMaxSpaw
 		mutex.Lock()
 		if math.MaxInt64-*eggsInFridge > eggsSpawnCount {
 			*eggsInFridge += eggsSpawnCount
+			log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц с задержкой ", eggsSpawnDelay)
+			log.Print("Количество яиц в холодильнике: ", *eggsInFridge)
 		} else {
 			wg.Done()
+			mutex.Unlock()
+			break
 		}
-		log.Print("Курица ", number, " снесла ", eggsSpawnCount, " яиц с задержкой ", eggsSpawnDelay)
-		log.Print("Количество яиц в холодильнике: ", *eggsInFridge)
 		mutex.Unlock()
 	}
 }
