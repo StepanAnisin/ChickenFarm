@@ -1,10 +1,10 @@
 package farm
 
 import (
-	"fmt"
-	"github.com/StepanAnisin/chickenfarm/pkg/config"
 	"log"
 	"sync"
+
+	"github.com/StepanAnisin/chickenfarm/pkg/config"
 )
 
 type Ranch struct {
@@ -13,7 +13,7 @@ type Ranch struct {
 }
 
 func InitRanch(ranch *Ranch) {
-	cfg, err := config.LoadConfig("config/app.env")
+	cfg, err := config.LoadConfig("../config/app.env")
 	if err != nil {
 		log.Fatal("can not load config:", err)
 	}
@@ -28,9 +28,9 @@ func InitRanch(ranch *Ranch) {
 		cfg.FarmerMinNeededQuantity, &ranch.mutex, &ranch.eggsInFridge)
 }
 
-func GetEggsCount(ranch *Ranch) {
+func GetEggsCount(ranch *Ranch) int {
 	ranch.mutex.Lock()
-	fmt.Print(ranch.eggsInFridge)
-	fmt.Printf("Количество яиц в холодильнике: %d", ranch.eggsInFridge)
+	eggsCount := ranch.eggsInFridge
 	ranch.mutex.Unlock()
+	return eggsCount
 }

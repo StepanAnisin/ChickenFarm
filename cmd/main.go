@@ -1,18 +1,21 @@
 package main
 
 import (
-	"github.com/StepanAnisin/chickenfarm/pkg/farm"
+	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/StepanAnisin/chickenfarm/pkg/farm"
 )
 
 func main() {
 	ranch := new(farm.Ranch)
-	farm.InitRanch(ranch)
+	go farm.InitRanch(ranch)
 
 	//Запуск Хэндлера
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		farm.GetEggsCount(ranch)
+		eggsCount := farm.GetEggsCount(ranch)
+		fmt.Fprintf(w, "Количество яиц в холодильнике: %d", eggsCount)
 	})
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
