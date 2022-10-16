@@ -12,7 +12,7 @@ type Farmer struct {
 
 // Фермер приходит и забирает яйца
 func FarmerComes(FarmerCheckMinDelay int, FarmerCheckMaxDelay int, FarmerMaxNeededQuantity int,
-	FarmerMinNeededQuantity int, mutex *sync.Mutex, eggsInFridge *int) {
+	FarmerMinNeededQuantity int, mutex *sync.Mutex, eggsInFridge *int64) {
 	rand.Seed(time.Now().Unix())
 	for {
 		farmerCheckDelay := random(FarmerCheckMinDelay, FarmerCheckMaxDelay)
