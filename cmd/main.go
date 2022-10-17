@@ -17,7 +17,7 @@ func main() {
 	ranch := new(farm.Ranch)
 	go farm.InitRanch(ranch)
 
-	server := &http.Server{Addr: ":8080", Handler: nil}
+	server := &http.Server{Addr: ":8081", Handler: nil}
 	go func() {
 		//Запуск Хэндлера
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
